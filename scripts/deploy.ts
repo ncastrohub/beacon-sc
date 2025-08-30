@@ -1,4 +1,4 @@
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -8,8 +8,10 @@ async function main() {
   // Get the contract factory
   const MedicineRegistry = await ethers.getContractFactory("MedicineRegistry");
 
-  // Deploy the contract
-  const contract = await MedicineRegistry.deploy();
+  // Deploy the upgradeable proxy contract
+  const contract = await upgrades.deployProxy(MedicineRegistry, [], {
+    initializer: "initialize",
+  });
   await contract.waitForDeployment();
 
   // Log the contract address

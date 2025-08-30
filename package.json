@@ -22,7 +22,9 @@
 	],
 	"license": "MIT",
 	"dependencies": {
-		"@openzeppelin/contracts": "5.4.0"
+		"@openzeppelin/contracts": "^5.4.0",
+		"@openzeppelin/contracts-upgradeable": "^5.4.0",
+		"@openzeppelin/hardhat-upgrades": "^3.9.1"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.1",
