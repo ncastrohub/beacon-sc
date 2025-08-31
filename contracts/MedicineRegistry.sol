@@ -8,10 +8,9 @@ error PharmaNameNotSet(address pharma);
 error InvalidMedicineId(uint256 medicineId);
 error PharmaNameRequired();
 
-import { AccessControlUpgradeable } from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import { Initializable } from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import { AccessControl } from "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract MedicineRegistry is Initializable, AccessControlUpgradeable {
+contract MedicineRegistry is AccessControl {
     // Define roles
     bytes32 public constant PHARMA_ROLE = keccak256("PHARMA_ROLE");
     bytes32 public constant REFEREE_ROLE = keccak256("REFEREE_ROLE");
@@ -58,17 +57,10 @@ contract MedicineRegistry is Initializable, AccessControlUpgradeable {
     // ✅ New: Pharma name → medicine → batch (for fast name-based lookup)
     mapping(string => mapping(uint256 => uint256)) public medicineToBatchByName;
 
-    uint256 public nextBatchId;
+    uint256 public nextBatchId = 1;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
-        _disableInitializers();
-    }
-
-    function initialize() public initializer {
-        __AccessControl_init();
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        nextBatchId = 1;
     }
 
     /**
