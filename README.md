@@ -1,5 +1,6 @@
-BEACON Solidity Contracts Repository
+# BEACON Solidity Contracts Repository
 
+### How to locally test:
 
 Uses: coston2 flare testnet network
 
